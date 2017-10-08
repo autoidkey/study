@@ -251,7 +251,7 @@ sub morph_array {
 
 sub is_facili {
     my $ss = $_[0];
-    return ($ss =~ / facilitation=\"true\"/);
+    return ($ss =~ /facilitation=\"true\"/);
 }
 
 sub ngram2str {
@@ -282,7 +282,7 @@ sub get_surface {
 
 sub get_base {
     my $morph = $_[0];
-    if ($morph =~ / mph=\"mecab[^\"]+;([^;]+?);[^;]+?\"/) {
+    if ($morph =~ /mph=\"mecab[^\"]+;([^;]+?);[^;]+?\"/) {
 	my $base = $1;
 	return $base;
     }
