@@ -9,8 +9,6 @@ import predicate_arg_structure as pas
 import gene_q as gq
 import re #正規表現
 import csv
-import kaiseki3 as k3
-
 '''
 f = open('data.csv','r')
 
