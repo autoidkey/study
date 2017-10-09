@@ -6,14 +6,14 @@ import codecs
 import take_impor_verb as tiv
 
 def context_info(lis) :
-	sents = lis[2]
+	sents = lis[3]
 	seps = ['。','？','?']
 	for sep in seps :
 		sents = sents.replace(sep,".")
 		sen = sents.split(".")
 		sen.pop()
 
-	info = [lis[1],sen]
+	info = [lis[2],sen]
 	#print(info)
 	return info
 
@@ -38,10 +38,12 @@ def mekabuka(string) :
 
 def mekabuka_par(array,dic,key) :
 	#内容語のみ
+	print("array:",array)
 	get = ["名詞","動詞","形容詞"]
 	m = MeCab.Tagger ("-Ochasen")
 	for string in array :
-		me = m.parse(string)
+		print(string)
+		me = m.parse(string[0])
 		mek = me.split("\n")
 		mek.pop()
 		mek.pop() #EOS
@@ -129,9 +131,11 @@ def get_score(args) :
 		for row in dr :
 			idfacires.append(row)  #id,faci,remark  
 		f.close()
+		#print(idfacires)
 
 		for one in idfacires :
 			remark = context_info(one)
+			#print(remark)
 			if remark[0] == "false" : 
 				#not faci
 				for sen in remark[1] :
@@ -167,7 +171,7 @@ def get_score(args) :
 
 							distance = 0
 							#findrが空の時
-							if len(finder) == 0:
+							if finder[0] == '':
 								continue
 							#compare par faci
 							list_par = mekabuka_par(finder,cooc,ex)
@@ -175,8 +179,9 @@ def get_score(args) :
 							end = len(idfacires)
 							for i in range(present + 1,end) :
 								distance += 1
-								if idfacires[i][1] == "true" :
-									list_faci = mekabuka(idfacires[i][2])
+								if idfacires[i][2] == "true" :
+									list_faci = mekabuka(idfacires[i][3])
+									#共起するか
 									apper = comparer(list_par,list_faci)
 									if apper :
 										#dist
